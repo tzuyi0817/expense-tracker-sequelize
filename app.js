@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 //setting routers
 app.use('/', require('./routes/home'))
-// app.use('/record', require('./routes/record'))
+app.use('/record', require('./routes/record'))
 // app.use('/filter', require('./routes/filter'))
 app.use('/users', require('./routes/user'))
 // app.use('/auth', require('./routes/auths'))
