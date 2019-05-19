@@ -14,13 +14,12 @@ router.get('/new', authenticated, (req, res) => {
 
 //新增一筆支出
 router.post('/new', authenticated, (req, res) => {
-  const record = Record({ ...req.body, UserId: req.user.id })
-
-  record.save(err => {
-    if (err) return console.log(err)
+  Record.create({ ...req.body, UserId: req.user.id }).then(record => {
     res.redirect('/')
   })
-
+    .catch(error => {
+      res.status(422).json(error)
+    })
 })
 
 //編輯頁面

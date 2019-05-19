@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.STRING,
     amount: DataTypes.INTEGER
   }, {});
-  Record.associate = function(models) {
-    // associations can be defined here
+  Record.associate = function (models) {
+    Record.belongsTo(models.User, { foreignKey: 'userId' })
   };
   return Record;
 };
