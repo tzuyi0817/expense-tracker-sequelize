@@ -7,8 +7,6 @@ const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
 const db = require('./models')
-const Record = db.Record
-const User = db.User
 
 //dotenv
 if (process.env.NODE_ENV !== 'production') {
