@@ -1,0 +1,47 @@
+.down {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.total {
+  margin-left: 215px;
+}
+
+.amount {
+  margin-left: 100px;
+  font-size: 90px;
+  color: #D2691E;
+}
+
+.awesome {
+  font-size: 50px;
+  color: #00FFFF;
+  margin-left: 150px;
+  width: 50px;
+}
+
+.date {
+  font-size: 15px;
+}
+
+.delete {
+  margin-right: 150px;
+}
+
+.edit {
+  margin-right: 20px;
+}
+
+.create {
+  margin-left: 400px;
+  width: 250px;
+}
+
+.money {
+  margin-right: 50px;
+}
+
+.name {
+  width: 250px;
+}
