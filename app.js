@@ -2,11 +2,13 @@ const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+const db = require('./models')
+const Record = db.Record
+const User = db.User
 
 //dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -26,22 +28,6 @@ app.set('view engine', 'handlebars')
 //setting css
 app.use(express.static('public'))
 
-//setting mongodb
-mongoose.set('debug', true)
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', { useNewUrlParser: true, useCreateIndex: true })
-
-const db = mongoose.connection
-
-//連線異常
-db.on('error', () => {
-  console.log('mongodb error')
-})
-
-//連線成功
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
-
 //setting session
 app.use(session({
   secret: 'key',
@@ -55,7 +41,7 @@ app.use(flash())
 //setting passport
 app.use(passport.initialize())
 app.use(passport.session())
-require('./config/passport')(passport)
+// require('./config/passport')(passport)
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
@@ -66,12 +52,13 @@ app.use((req, res, next) => {
 
 
 //setting routers
-app.use('/', require('./routes/home'))
+// app.use('/', require('./routes/home'))
 // app.use('/record', require('./routes/record'))
 // app.use('/filter', require('./routes/filter'))
 app.use('/users', require('./routes/user'))
 // app.use('/auth', require('./routes/auths'))
 
 app.listen(process.env.PORT || 3000, () => {
+  db.sequelize.sync()
   console.log('Express is running on http://localhost:3000')
 })
