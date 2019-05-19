@@ -30,7 +30,6 @@ router.get('/:id/edit', authenticated, (req, res) => {
     }
 
     Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
-
       let optionASelected = false
       let optionBSelected = false
       let optionCSelected = false
@@ -62,8 +61,7 @@ router.put('/:id', authenticated, (req, res) => {
   Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
     Object.assign(record, req.body)
 
-    record.save(err => {
-      if (err) return console.log(err)
+    record.save().then(record => {
       res.redirect(`/`)
     })
       .catch(error => {
