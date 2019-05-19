@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
   if (errors.length > 0) {
     res.render('register', { errors, name, email, password, password2 })
   } else {
-    User.findOne({ email: email }).then(user => {
+    User.findOne({ where: { email: email } }).then(user => {
       if (user) {
         errors.push({ message: '這個信箱已經註冊過了' })
         res.render('register', { errors, name, email, password, password2 })
