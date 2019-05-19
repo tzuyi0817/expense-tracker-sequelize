@@ -4,11 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     category: DataTypes.STRING,
     date: DataTypes.STRING,
-    amount: DataTypes.NUMBER
+    amount: DataTypes.INTEGER
   }, {});
-  Record.associate = function (models) {
+  Record.associate = function(models) {
     // associations can be defined here
-    Record.belongsTo(models.User, { foreignKey: 'userID' })
   };
   return Record;
 };

@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const moment = require('moment')
 const { authenticated } = require('../config/auth')
-const db = require('./models')
+const db = require('../models')
 const Record = db.Record
+const User = db.User
 
 //新增一筆支出頁面
 router.get('/new', authenticated, (req, res) => {
@@ -13,7 +14,7 @@ router.get('/new', authenticated, (req, res) => {
 
 //新增一筆支出
 router.post('/new', authenticated, (req, res) => {
-  const record = Record({ ...req.body, userId: req.user.id })
+  const record = Record({ ...req.body, UserId: req.user.id })
 
   record.save(err => {
     if (err) return console.log(err)
@@ -24,7 +25,7 @@ router.post('/new', authenticated, (req, res) => {
 
 //編輯頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Record.findByPK(req.user.id).then(user => {
+  User.findByPk(req.user.id).then(user => {
     if (!user) {
       return res.error()
     }
@@ -74,12 +75,12 @@ router.put('/:id', authenticated, (req, res) => {
 
 //刪除資料
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Record.findByPK(req.user.id).then(user => {
+  User.findByPk(req.user.id).then(user => {
     if (!user) {
       return res.error()
     }
 
-    record.destroy({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
+    Record.destroy({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
       res.redirect('/')
     })
       .catch(error => {

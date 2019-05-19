@@ -56,7 +56,7 @@ app.use('/record', require('./routes/record'))
 app.use('/users', require('./routes/user'))
 app.use('/auth', require('./routes/auths'))
 
-app.listen(process.env.PORT || 3000, () => {
-  db.sequelize.sync()
+app.listen(3000, () => {
+  db.sequelize.sync({ force: true })
   console.log('Express is running on http://localhost:3000')
 })
