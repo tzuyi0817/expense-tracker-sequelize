@@ -14,12 +14,22 @@ router.get('/new', authenticated, (req, res) => {
 
 //新增一筆支出
 router.post('/new', authenticated, (req, res) => {
-  Record.create({ ...req.body, UserId: req.user.id }).then(record => {
-    res.redirect('/')
-  })
-    .catch(error => {
-      res.status(422).json(error)
+  const { name, date, category, amount } = req.body
+
+  let errors = []
+
+  if (!name || !date || category == 0 || !amount) {
+    errors.push({ message: '所有欄位都是必填' })
+    const today = moment().format('YYYY-MM-DD')
+    res.render('new', { errors, name, today, category, amount })
+  } else {
+    Record.create({ ...req.body, UserId: req.user.id }).then(record => {
+      res.redirect('/')
     })
+      .catch(error => {
+        res.status(422).json(error)
+      })
+  }
 })
 
 //編輯頁面
@@ -61,12 +71,19 @@ router.put('/:id', authenticated, (req, res) => {
   Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
     Object.assign(record, req.body)
 
-    record.save().then(record => {
-      res.redirect(`/`)
-    })
-      .catch(error => {
-        res.status(422).json(error)
+    const { name, date, amount } = req.body
+
+    if (!name || !date || !amount) {
+      console.log('所有欄位都是必填')
+      res.redirect(`/record/${req.params.id}/edit`)
+    } else {
+      record.save().then(record => {
+        res.redirect(`/`)
       })
+        .catch(error => {
+          res.status(422).json(error)
+        })
+    }
   })
 })
 
