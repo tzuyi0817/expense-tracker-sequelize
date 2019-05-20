@@ -16,7 +16,7 @@ router.get('/', authenticated, (req, res) => {
       for (record of records) {
         totalAmount += record.amount
       }
-      res.render('index', { records, totalAmount })
+      res.render('index', { records, totalAmount})
     })
       .catch(error => {
         res.status(422).json(error)
