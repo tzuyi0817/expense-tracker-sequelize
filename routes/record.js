@@ -71,19 +71,13 @@ router.put('/:id', authenticated, (req, res) => {
   Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
     Object.assign(record, req.body)
 
-    const { name, date, amount } = req.body
-
-    if (!name || !date || !amount) {
-      console.log('所有欄位都是必填')
-      res.redirect(`/record/${req.params.id}/edit`)
-    } else {
-      record.save().then(record => {
-        res.redirect(`/`)
+    record.save().then(record => {
+      res.redirect(`/`)
+    })
+      .catch(error => {
+        res.status(422).json(error)
       })
-        .catch(error => {
-          res.status(422).json(error)
-        })
-    }
+
   })
 })
 
