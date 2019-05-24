@@ -88,7 +88,7 @@ router.delete('/:id/delete', authenticated, (req, res) => {
       return res.error()
     }
 
-    Record.destroy({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
+    Record.destroy({ where: { id: req.params.id, userId: req.user.id } }).then(record => {
       res.redirect('/')
     })
       .catch(error => {
