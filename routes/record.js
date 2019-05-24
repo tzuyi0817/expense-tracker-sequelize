@@ -23,7 +23,7 @@ router.post('/new', authenticated, (req, res) => {
     const today = moment().format('YYYY-MM-DD')
     res.render('new', { errors, name, today, category, amount })
   } else {
-    Record.create({ ...req.body, UserId: req.user.id }).then(record => {
+    Record.create({ ...req.body, userId: req.user.id }).then(record => {
       res.redirect('/')
     })
       .catch(error => {
@@ -39,7 +39,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
       return res.error()
     }
 
-    Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
+    Record.findOne({ where: { id: req.params.id, userId: req.user.id } }).then(record => {
       let optionASelected = false
       let optionBSelected = false
       let optionCSelected = false
@@ -68,7 +68,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 //編輯資料
 router.put('/:id', authenticated, (req, res) => {
-  Record.findOne({ where: { Id: req.params.id, UserId: req.user.id } }).then(record => {
+  Record.findOne({ where: { id: req.params.id, userId: req.user.id } }).then(record => {
     Object.assign(record, req.body)
 
     record.save().then(record => {

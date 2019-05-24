@@ -11,12 +11,12 @@ router.get('/', authenticated, (req, res) => {
       return res.error()
     }
 
-    Record.findAll({ where: { UserId: req.user.id } }).then(records => {
+    Record.findAll({ where: { userId: req.user.id } }).then(records => {
       let totalAmount = 0
       for (record of records) {
         totalAmount += record.amount
       }
-      res.render('index', { records, totalAmount})
+      res.render('index', { records, totalAmount })
     })
       .catch(error => {
         res.status(422).json(error)

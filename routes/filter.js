@@ -12,7 +12,7 @@ router.get('/month/:month', authenticated, (req, res) => {
     }
 
     const month = req.params.month
-    Record.findAll({ where: { UserId: req.user.id } }).then(records => {
+    Record.findAll({ where: { userId: req.user.id } }).then(records => {
       const monthFilter = records.filter(record => {
         return month === record.date.substring(5, 7)
       })
@@ -48,7 +48,7 @@ router.get('/category/:category', authenticated, (req, res) => {
       category = '其他'
     }
 
-    Record.findAll({ where: { category: req.params.category, UserId: req.user.id } }).then(records => {
+    Record.findAll({ where: { category: req.params.category, userId: req.user.id } }).then(records => {
 
       let totalAmount = 0
       for (record of records) {
