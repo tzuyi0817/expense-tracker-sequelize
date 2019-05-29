@@ -18,8 +18,12 @@ router.post('/new', authenticated, (req, res) => {
 
   let errors = []
 
-  if (!name || !date || category == 0 || !amount) {
+  if (!name || !date || category === 0 || !amount) {
     errors.push({ message: '所有欄位都是必填' })
+    const today = moment().format('YYYY-MM-DD')
+    res.render('new', { errors, name, today, category, amount })
+  } else if (isNaN(amount) === true) {
+    errors.push({ message: '金額欄位請填入數字' })
     const today = moment().format('YYYY-MM-DD')
     res.render('new', { errors, name, today, category, amount })
   } else {
